@@ -83,7 +83,7 @@ export default function SomeInput() {
             setMode(Number(event.target.value) as AppMode)
           }}
         >
-          <option value={AppMode.blocking}>Blocking</option>
+          <option value={AppMode.blocking}>UI Thread</option>
           <option value={AppMode.webWorkerSingleton}>
             Web Worker(Singleton)
           </option>

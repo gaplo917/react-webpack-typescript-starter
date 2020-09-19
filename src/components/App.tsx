@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import SomeListDedicatedWorker from './SomeListDedicatedWorker'
 import SomeListWorkerPool from './SomeListWorkerPool'
 import { compute } from '../workers/compute'
+import { Box } from '@material-ui/core'
 
 function App() {
   const [input, setInput] = useState<InputModel>({
@@ -21,19 +22,34 @@ function App() {
   return (
     <AppCtx.Provider value={{ input, setInput, mode, setMode }}>
       <div className="App">
-        <h1>Animation to track UI blocking</h1>
-        <CircularProgress />
-        <h2>Start editing to see some magic happen!</h2>
-        <SomeInput />
+        <h1>React Offload UI Thread Research</h1>
+        <h3>Animation to track UI blocking workload</h3>
+        <Box textAlign="center" alignContent="center">
+          <CircularProgress />
+        </Box>
         <p>
-          Each compute run with {input.base}^{input.pow}(
-          {Math.ceil(Math.pow(input.base, input.pow))}) iterations.
+          Start <b>tuning</b> the parameters to see the performance!
         </p>
-        <pre>{String(compute)}</pre>
+        <SomeInput />
+        <Box px={2}>
+          <pre>
+            <p>
+              {'//'} each compute run with {input.base}^{input.pow}(
+              {Math.ceil(Math.pow(input.base, input.pow))}) iterations.
+            </p>
+            {String(compute)}
+          </pre>
+        </Box>
         {mode === AppMode.blocking && <SomeListBlocking />}
         {mode === AppMode.webWorkerSingleton && <SomeListSingleton />}
         {mode === AppMode.webWorkerDedicated && <SomeListDedicatedWorker />}
         {mode === AppMode.webWorkerPool && <SomeListWorkerPool />}
+        <Box pt={4}>
+          For detail explanations and more technical R&D, you could visit{' '}
+          <a href="https://www.patreon.com/gaplotech">
+            https://www.patreon.com/gaplotech
+          </a>
+        </Box>
       </div>
     </AppCtx.Provider>
   )

@@ -30,6 +30,7 @@ export default function VirtualList({
   return (
     <div className={classes.root}>
       <List
+        autoWidth
         width={800}
         height={800}
         rowCount={input.rowCount}

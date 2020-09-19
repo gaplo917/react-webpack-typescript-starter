@@ -1,7 +1,6 @@
 // shared config (dev and prod)
-const {resolve} = require('path');
-const {CheckerPlugin} = require('awesome-typescript-loader');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { resolve } = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   resolve: {
@@ -11,17 +10,32 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.worker\.singleton\.ts$/i,
+        use: [
+          {
+            loader: 'comlink-loader',
+            options: {
+              singleton: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.js$/,
         use: ['babel-loader', 'source-map-loader'],
         exclude: /node_modules/,
       },
       {
-        test: /\.tsx?$/,
-        use: ['babel-loader', 'awesome-typescript-loader'],
-      },
-      {
         test: /\.css$/,
-        use: ['style-loader', { loader: 'css-loader', options: { importLoaders: 1 } }],
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+        ],
       },
       {
         test: /\.(scss|sass)$/,
@@ -40,15 +54,12 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new CheckerPlugin(),
-    new HtmlWebpackPlugin({template: 'index.html.ejs',}),
-  ],
+  plugins: [new HtmlWebpackPlugin({ template: 'index.html.ejs' })],
   externals: {
-    'react': 'React',
+    react: 'React',
     'react-dom': 'ReactDOM',
   },
   performance: {
     hints: false,
   },
-};
+}
